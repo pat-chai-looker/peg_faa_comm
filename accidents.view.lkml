@@ -70,6 +70,7 @@ view: accidents {
       raw,
       time,
       date,
+      day_of_week,
       week,
       month,
       quarter,
