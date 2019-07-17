@@ -72,6 +72,7 @@ view: accidents {
       date,
       day_of_week,
       week,
+      week_of_year,
       month,
       quarter,
       year

@@ -153,7 +153,11 @@ view: aircrafts {
     type: zipcode
     sql: ${TABLE}.zip ;;
   }
-
+  measure: count_formatted {
+    type: count
+#    value_format: ""
+    drill_fields: [id, name, aircraft_models.id, accidents.count, flights.count]
+  }
   measure: count {
     type: count
     drill_fields: [id, name, aircraft_models.id, accidents.count, flights.count]

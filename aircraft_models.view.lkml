@@ -7,6 +7,10 @@ view: aircraft_models {
     sql: ${TABLE}.id ;;
   }
 
+#dimension:fieldref {
+#  sql: ${accidents.id} ;;
+#}
+
   dimension: aircraft_category_id {
     type: number
     sql: ${TABLE}.aircraft_category_id ;;
