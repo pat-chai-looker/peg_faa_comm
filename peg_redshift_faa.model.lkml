@@ -24,7 +24,11 @@ explore: accidents {
   }
 }
 
-explore: aircraft_models {}
+explore: aircraft_models {
+  sql_always_where: {% if aircraft_models.turn_on_filter._parameter_value == "true" %} ${model} LIKE '%'||${manufacturer}||'%'
+  {% else %} 1=1
+  {% endif %};;
+}
 
 explore: aircrafts {
   join: aircraft_models {
@@ -55,3 +59,4 @@ explore: flights {
     relationship: many_to_one
   }
 }
+explore: last_crashes {}

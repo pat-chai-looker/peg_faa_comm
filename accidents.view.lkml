@@ -73,12 +73,31 @@ view: accidents {
       day_of_week,
       week,
       week_of_year,
+      month_name,
+      hour_of_day,
+      hour12,
+      day_of_year,
+      month_num,
       month,
       quarter,
       year
     ]
     sql: ${TABLE}.event_date ;;
   }
+  measure: most_recent_event{
+    type: date
+    sql:  max(${event_raw}) ;;
+  }
+
+  dimension: hour_12 {
+    type: number
+    sql: case when ${event_hour_of_day} <13 then ${event_hour_of_day} else ${event_hour_of_day}-12 end;;
+  }
+
+ dimension: monthweek {
+   type: string
+   sql: ${event_month_name}|| '-' || cast(${event_week_of_year} as varchar) ;;
+ }
 
   dimension: event_id {
     type: string
@@ -187,5 +206,9 @@ view: accidents {
   measure: count {
     type: count
     drill_fields: [id, airport_name, aircrafts.id, aircrafts.name]
+  }
+  measure: count_not_null{
+    type: yesno
+    sql: ${count} is  null AND ${broad_phase_of_flight}='APPROACH';;
   }
 }
