@@ -77,6 +77,28 @@ view: accidents {
       hour_of_day,
       hour12,
       day_of_year,
+      day_of_month,
+      month_num,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.event_date ;;
+  }
+  dimension_group: event_hide {
+    type: time
+    timeframes: [
+      raw,
+   #   time,
+      date,
+      day_of_week,
+      week,
+      week_of_year,
+      month_name,
+      hour_of_day,
+      hour12,
+      day_of_year,
+      day_of_month,
       month_num,
       month,
       quarter,
@@ -154,6 +176,20 @@ view: accidents {
     sql: ${TABLE}.number_of_fatalities ;;
   }
 
+  dimension: higher_fa  {
+    type: number
+    sql: case when {% parameter threshhold | times 5 %} < ${number_of_fatalities} then ${number_of_fatalities} else {% parameter threshhold | times 5 %} end ;;
+  }
+
+  dimension: testTimes {
+    type: number
+    sql: {% assign var=accidents.threshhold._parameter_value | times: 5.0 %}{{var}} ;;
+  }
+  dimension: showParm {
+    type: number
+    sql: {% parameter threshhold %} ;;
+  }
+
   dimension: number_of_minor_injuries {
     type: number
     sql: ${TABLE}.number_of_minor_injuries ;;
@@ -203,12 +239,34 @@ view: accidents {
     sql: ${TABLE}.weather_condition ;;
   }
 
+  parameter: threshhold {
+    type: number
+    default_value: "5"
+  }
+
+  measure: higher  {
+    type: number
+    sql: case when {% parameter threshhold | times 5 %} < ${count} then ${count} else {% parameter threshhold | times 5 %} end ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, airport_name, aircrafts.id, aircrafts.name]
   }
+
+  measure: count_pop{
+    type: percent_of_previous
+    sql: ${count} ;;
+  }
+
+  measure: count_pop_f {
+    type: percent_of_previous
+    sql: ${count} ;;
+    value_format_name: percent_2
+  }
   measure: count_not_null{
     type: yesno
-    sql: ${count} is  null AND ${broad_phase_of_flight}='APPROACH';;
-  }
+#    sql: ${count} is not null AND (${broad_phase_of_flight}='APPROACH');;
+    sql:  ${count} is not null ;;
+ }
 }
