@@ -205,6 +205,11 @@ view: accidents {
     sql: ${TABLE}.number_of_uninjured ;;
   }
 
+dimension: firstDateLastQ {
+  type: date
+  sql: date(date_trunc('quarter',(date_add('quarter',-1,current_date)))) ;;
+}
+
   dimension_group: publication {
     type: time
     timeframes: [
