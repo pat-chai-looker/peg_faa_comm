@@ -5,8 +5,8 @@ include: "*.view"
 include: "accidents.explore.lkml"
 include: "QueryTZEmbedTest.dashboard.lookml"
 datagroup: peg_redshift_faa_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "2 hour"
+   sql_trigger: SELECT MAX(id) FROM etl_log;;
+  #max_cache_age: "2 hour"
 }
 
 persist_with: peg_redshift_faa_default_datagroup
