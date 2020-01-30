@@ -8,6 +8,8 @@ datagroup: peg_redshift_faa_default_datagroup {
   max_cache_age: "1 hour"
 }
 
+
+explore: sql_runner_query {}
 persist_with: peg_redshift_faa_default_datagroup
 
 explore: accidents {
