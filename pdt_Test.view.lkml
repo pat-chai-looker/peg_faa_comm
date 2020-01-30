@@ -1,8 +1,7 @@
 view: sql_runner_query {
   derived_table: {
-    sql_trigger_value: SELECT DATE_PART('hour', GETDATE())
- ;;
-publish_as_db_view: yes
+    publish_as_db_view: yes
+    sql_trigger_value: SELECT DATE_PART('hour', GETDATE());;
     create_process: {
       sql_step: CREATE TABLE ${SQL_TABLE_NAME} (
         aircraft_engine_type_id int,
