@@ -1,6 +1,6 @@
 view: sql_runner_query {
   derived_table: {
-    sql_trigger_value: SELECT HOUR(CURTIME())
+    sql_trigger_value: SELECT DATE_PART('hour', GETDATE())
  ;;
 publish_as_db_view: yes
     create_process: {
