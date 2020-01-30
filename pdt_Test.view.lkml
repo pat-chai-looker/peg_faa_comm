@@ -1,4 +1,4 @@
-view: sql_runner_query {
+view: test_publish_pls {
   derived_table: {
     publish_as_db_view: yes
     sql_trigger_value: SELECT DATE_PART('hour', GETDATE());;

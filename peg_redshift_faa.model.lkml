@@ -10,7 +10,7 @@ datagroup: peg_redshift_faa_default_datagroup {
 }
 
 
-explore: sql_runner_query {}
+explore: test_publish_pls {}
 persist_with: peg_redshift_faa_default_datagroup
 
 label: "A Label to Make them Disappear"
