@@ -17,6 +17,14 @@ view: carriers {
     sql: ${TABLE}.nickname ;;
   }
 
+  filter: nick_filter {
+    suggest_dimension: nickname
+  }
+
+  dimension: testfilter {
+    sql: (select * from flights where {% condition nick_filter %} airline {% endcondition %}) ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, nickname, name, flights.count]

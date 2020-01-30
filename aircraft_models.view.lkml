@@ -7,6 +7,10 @@ view: aircraft_models {
     sql: ${TABLE}.id ;;
   }
 
+#dimension:fieldref {
+#  sql: ${accidents.id} ;;
+#}
+
   dimension: aircraft_category_id {
     type: number
     sql: ${TABLE}.aircraft_category_id ;;
@@ -42,6 +46,27 @@ view: aircraft_models {
     sql: ${TABLE}.model ;;
   }
 
+ dimension: model_contains_manu_d {
+   type: yesno
+   sql:  ${model} LIKE '%'||${manufacturer}||'%'  ;;
+ }
+
+filter: model_contains_manu_y {
+  type: yesno
+  sql: {% if turn_on_filter._parameter_value == "true" %} ${model} LIKE '%'||${manufacturer}||'%'
+  {% else %} 1=1
+    {% endif %};;
+}
+
+  filter: model_contains_manu_f {
+    suggestions: ["yes"]
+    sql:  ${model} LIKE '%'||${manufacturer}||'%'  ;;
+  }
+
+parameter: turn_on_filter{
+  type: yesno
+}
+
   dimension: seats {
     type: number
     sql: ${TABLE}.seats ;;
@@ -60,5 +85,10 @@ view: aircraft_models {
   measure: count {
     type: count
     drill_fields: [id, aircrafts.count]
+  }
+
+  measure: seat_total {
+    type: sum
+    sql: ${seats} ;;
   }
 }
