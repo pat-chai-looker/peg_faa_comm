@@ -7,7 +7,8 @@ view: test_publish_pls {
         aircraft_engine_type_id int,
         city varchar(100)
         );;
-  sql_step: INSERT INTO ${SQL_TABLE_NAME}(aircraft_engine_type_id, city)
+  sql_step:
+  CREATE TABLE ${SQL_TABLE_NAME}(aircraft_engine_type_id, city)
   SELECT
   aircraft_engine_type_id  AS "aircrafts.aircraft_engine_type_id",
   city  AS "aircrafts.city"
